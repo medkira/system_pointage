@@ -1,11 +1,11 @@
-import { Button } from '@/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { CalendarDateRangePicker } from './components/date-range-picker'
-import { MainNav } from './components/main-nav'
-import { Overview } from './components/overview'
-import { UserNav } from './components/user-nav'
-import { AttendanceTable } from './components/attendance-table'
-import { EmployeeTable } from './components/employee-table'
+import { Button } from '@/presentation/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/presentation/components/ui/tabs'
+import { CalendarDateRangePicker } from './presentation/components/date-range-picker'
+import { MainNav } from './presentation/components/main-nav'
+import { Overview } from './presentation/components/overview'
+import { UserNav } from './presentation/components/user-nav'
+import { AttendanceTable } from './presentation/components/attendance-table'
+import { EmployeeTable } from './presentation/components/employee-table'
 
 function App(): JSX.Element {
   return (
