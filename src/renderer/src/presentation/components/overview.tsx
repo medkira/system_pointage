@@ -2,6 +2,7 @@ import { Employee } from '@/domain/entities/Employee'
 import { useEmployeeStore } from '@/infrastructure/stores/employeeStore'
 import { useExpenseStore } from '@/infrastructure/stores/expenseStore'
 import { Card, CardContent, CardHeader, CardTitle } from '@/presentation/components/ui/card'
+import { TrendingDown, TrendingUp } from 'lucide-react'
 
 export function Overview() {
   const { employees } = useEmployeeStore()
@@ -41,8 +42,94 @@ export function Overview() {
   // Calculate total monthly business cost (expenses + projected salary)
   const totalMonthlyCost = monthlyProjection + totalMonthlyExpenses
 
+  // Revenue calculations
+  const dailyRevenue = 5000 // This should come from your revenue tracking
+  const monthlyRevenue = dailyRevenue * 22 // Approximate monthly revenue
+
+  // Profit/Loss Calculations
+  const dailyProfit = dailyRevenue - (todayPayment + dailyExpenses)
+  const monthlyProfit = monthlyRevenue - (monthlyProjection + totalMonthlyExpenses)
+
+  // Profit margins
+  const profitMargin = (monthlyProfit / monthlyRevenue) * 100
+
   return (
     <div className="space-y-4">
+      {/* Revenue Overview Section */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card className={dailyProfit >= 0 ? 'border-green-500' : 'border-red-500'}>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Today's Profit/Loss</CardTitle>
+            {dailyProfit >= 0 ? (
+              <TrendingUp className="h-4 w-4 text-green-500" />
+            ) : (
+              <TrendingDown className="h-4 w-4 text-red-500" />
+            )}
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              <span className={dailyProfit >= 0 ? 'text-green-600' : 'text-red-600'}>
+                {dailyProfit >= 0 ? '+' : '-'}${Math.abs(dailyProfit).toFixed(2)}
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Revenue: ${dailyRevenue} - Costs: ${(todayPayment + dailyExpenses).toFixed(2)}
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className={monthlyProfit >= 0 ? 'border-green-500' : 'border-red-500'}>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Monthly Projection</CardTitle>
+            {monthlyProfit >= 0 ? (
+              <TrendingUp className="h-4 w-4 text-green-500" />
+            ) : (
+              <TrendingDown className="h-4 w-4 text-red-500" />
+            )}
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              <span className={monthlyProfit >= 0 ? 'text-green-600' : 'text-red-600'}>
+                {monthlyProfit >= 0 ? '+' : '-'}${Math.abs(monthlyProfit).toFixed(2)}
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Expected profit margin: {profitMargin.toFixed(1)}%
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Revenue Today</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${dailyRevenue}</div>
+            <p className="text-xs text-muted-foreground">Gross revenue before expenses</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Monthly Revenue Target</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${monthlyRevenue}</div>
+            <div className="mt-2 h-2 w-full rounded-full bg-secondary">
+              <div
+                className={`h-2 rounded-full ${
+                  profitMargin >= 20 ? 'bg-green-500' : 'bg-orange-500'
+                }`}
+                style={{ width: `${Math.min(100, (profitMargin + 100) / 2)}%` }}
+              />
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              {profitMargin >= 20 ? 'On Track' : 'Below Target'}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Employee Payments Section */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
