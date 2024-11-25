@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Employee, PaymentType } from '@/domain/entities/Employee'
+import { Employee, PaymentType, PrimeType } from '@/domain/entities/Employee'
 import {
   Dialog,
   DialogContent,
@@ -36,7 +36,13 @@ export function EmployeeFormDialog({ mode, employee, onClose }: EmployeeFormDial
       status: 'present',
       workingHours: 8.5,
       paymentType: 'daily',
-      rate: 0
+      rate: 0,
+      benefits: {
+        prime: 0,
+        conges: 0,
+        congesRate: 0,
+        primeType: 'performance'
+      }
     }
   )
 
@@ -171,6 +177,81 @@ export function EmployeeFormDialog({ mode, employee, onClose }: EmployeeFormDial
               </div>
             </div>
           )}
+
+          <div className="space-y-4">
+            <h4 className="font-medium">Avantages</h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="prime">Prime (€)</Label>
+                <Input
+                  id="prime"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={formData.benefits?.prime || ''}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      benefits: { ...formData.benefits!, prime: parseFloat(e.target.value) }
+                    })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="primeType">Type de Prime</Label>
+                <Select
+                  value={formData.benefits?.primeType}
+                  onValueChange={(value) =>
+                    setFormData({
+                      ...formData,
+                      benefits: { ...formData.benefits!, primeType: value as PrimeType }
+                    })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionner type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="performance">Performance</SelectItem>
+                    <SelectItem value="attendance">Présence</SelectItem>
+                    <SelectItem value="other">Autre</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="conges">Congés (Jours)</Label>
+                <Input
+                  id="conges"
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={formData.benefits?.conges || ''}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      benefits: { ...formData.benefits!, conges: parseInt(e.target.value) }
+                    })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="congesRate">Taux Congés (€)</Label>
+                <Input
+                  id="congesRate"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={formData.benefits?.congesRate || ''}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      benefits: { ...formData.benefits!, congesRate: parseFloat(e.target.value) }
+                    })
+                  }
+                />
+              </div>
+            </div>
+          </div>
 
           <DialogFooter>
             <Button type="submit" className="w-full sm:w-auto">

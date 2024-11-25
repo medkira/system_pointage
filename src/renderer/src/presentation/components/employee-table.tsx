@@ -64,6 +64,7 @@ export function EmployeeTable({ type }: EmployeeTableProps) {
               <TableHead>Payment Type</TableHead>
               <TableHead>Rate</TableHead>
               <TableHead>Today's Pay</TableHead>
+              <TableHead>Benefits</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -123,6 +124,24 @@ export function EmployeeTable({ type }: EmployeeTableProps) {
                       ({employee.workingHours} hrs)
                     </span>
                   )}
+                </TableCell>
+                <TableCell>
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm font-medium">Prime:</span>
+                      <span className="text-sm">${employee.benefits.prime}</span>
+                      <span className="text-xs text-muted-foreground">
+                        ({employee.benefits.primeType})
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm font-medium">Congés:</span>
+                      <span className="text-sm">{employee.benefits.conges} jours</span>
+                      <span className="text-xs text-muted-foreground">
+                        (${employee.benefits.congesRate}/jour)
+                      </span>
+                    </div>
+                  </div>
                 </TableCell>
                 <TableCell className="space-x-2">
                   <EmployeeFormDialog mode="edit" employee={employee} />
