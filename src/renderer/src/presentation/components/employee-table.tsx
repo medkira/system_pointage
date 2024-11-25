@@ -11,6 +11,36 @@ import { EmployeeFormDialog } from './employee-form-dialog'
 import { useEmployeeStore } from '@/infrastructure/stores/employeeStore'
 import { cn } from '../lib/utils'
 import { Employee } from '@/domain/entities/Employee'
+import { EmployeeBenefitsDialog } from './employee-benefits-dialog'
+import { MoreHorizontal, Gift, Calendar } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/presentation/components/ui/dropdown-menu'
+import { useState } from 'react'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter
+} from '@/presentation/components/ui/dialog'
+import { Badge } from '@/presentation/components/ui/badge'
+import { Label } from '@/presentation/components/ui/label'
+import { Input } from '@/presentation/components/ui/input'
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem
+} from '@/presentation/components/ui/select'
+import { format } from 'date-fns'
 
 interface EmployeeTableProps {
   type: 'declared' | 'undeclared'
@@ -18,6 +48,7 @@ interface EmployeeTableProps {
 
 export function EmployeeTable({ type }: EmployeeTableProps) {
   const { employees } = useEmployeeStore()
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null)
   const filteredEmployees = employees.filter((emp) => emp.type === type)
 
   const formatRate = (employee: Employee) => {
@@ -70,7 +101,11 @@ export function EmployeeTable({ type }: EmployeeTableProps) {
           </TableHeader>
           <TableBody>
             {filteredEmployees.map((employee) => (
-              <TableRow key={employee.id}>
+              <TableRow
+                key={employee.id}
+                className="cursor-pointer hover:bg-muted/50 transition-colors"
+                onClick={() => setSelectedEmployee(employee)}
+              >
                 <TableCell className="font-medium">{employee.id}</TableCell>
                 <TableCell>{employee.name}</TableCell>
                 <TableCell>{employee.position}</TableCell>
@@ -126,34 +161,165 @@ export function EmployeeTable({ type }: EmployeeTableProps) {
                   )}
                 </TableCell>
                 <TableCell>
-                  <div className="space-y-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm font-medium">Prime:</span>
-                      <span className="text-sm">${employee.benefits.prime}</span>
-                      <span className="text-xs text-muted-foreground">
-                        ({employee.benefits.primeType})
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm font-medium">Congés:</span>
-                      <span className="text-sm">{employee.benefits.conges} jours</span>
-                      <span className="text-xs text-muted-foreground">
-                        (${employee.benefits.congesRate}/jour)
-                      </span>
+                  <div className="flex items-center space-x-2">
+                    <span
+                      className={cn('h-2 w-2 rounded-full', {
+                        'bg-green-500': employee.benefits.prime > 0 || employee.benefits.conges > 0,
+                        'bg-gray-300':
+                          employee.benefits.prime === 0 && employee.benefits.conges === 0
+                      })}
+                    />
+                    <div className="space-y-1">
+                      {employee.benefits.prime > 0 && (
+                        <div className="flex items-center space-x-2">
+                          <Gift className="h-4 w-4 text-blue-500" />
+                          <span className="text-sm">€{employee.benefits.prime}</span>
+                        </div>
+                      )}
+                      {employee.benefits.conges > 0 && (
+                        <div className="flex items-center space-x-2">
+                          <Calendar className="h-4 w-4 text-green-500" />
+                          <span className="text-sm">{employee.benefits.conges} jours</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="space-x-2">
-                  <EmployeeFormDialog mode="edit" employee={employee} />
-                  <Button variant="destructive" size="sm">
-                    Remove
-                  </Button>
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>
+                        <EmployeeFormDialog mode="edit" employee={employee} />
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <EmployeeBenefitsDialog employee={employee} />
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem className="text-red-600">Remove Employee</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
+
+      <Dialog open={!!selectedEmployee} onOpenChange={(open) => !open && setSelectedEmployee(null)}>
+        <DialogContent className="sm:max-w-[425px]">
+          {selectedEmployee && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="flex items-center justify-between">
+                  <span>Monthly Benefits - {selectedEmployee.name}</span>
+                  <Badge variant="outline">{format(new Date(), 'MMMM yyyy')}</Badge>
+                </DialogTitle>
+                <DialogDescription>
+                  Manage end of month benefits for this employee
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <Label>Prime</Label>
+                    <div className="text-sm text-muted-foreground">
+                      Last:{' '}
+                      {selectedEmployee.benefits.lastPrimeDate
+                        ? format(new Date(selectedEmployee.benefits.lastPrimeDate), 'PP')
+                        : 'Never'}
+                    </div>
+                  </div>
+                  <div className="flex space-x-2">
+                    <Input
+                      type="number"
+                      value={selectedEmployee.benefits.prime || ''}
+                      onChange={(e) =>
+                        handleBenefitUpdate(selectedEmployee, 'prime', parseFloat(e.target.value))
+                      }
+                      className="w-32"
+                      placeholder="Amount"
+                    />
+                    <Select
+                      value={selectedEmployee.benefits.primeType}
+                      onValueChange={(value: any) =>
+                        handleBenefitUpdate(selectedEmployee, 'primeType', value)
+                      }
+                    >
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Select type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="performance">Performance</SelectItem>
+                        <SelectItem value="attendance">Présence</SelectItem>
+                        <SelectItem value="other">Autre</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <Label>Congés</Label>
+                    <div className="text-sm text-muted-foreground">
+                      Last:{' '}
+                      {selectedEmployee.benefits.lastCongesDate
+                        ? format(new Date(selectedEmployee.benefits.lastCongesDate), 'PP')
+                        : 'Never'}
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>Days</Label>
+                      <Input
+                        type="number"
+                        value={selectedEmployee.benefits.conges || ''}
+                        onChange={(e) =>
+                          handleBenefitUpdate(
+                            selectedEmployee,
+                            'conges',
+                            parseFloat(e.target.value)
+                          )
+                        }
+                        placeholder="Days"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Daily Rate</Label>
+                      <Input
+                        type="number"
+                        value={selectedEmployee.benefits.congesRate || ''}
+                        onChange={(e) =>
+                          handleBenefitUpdate(
+                            selectedEmployee,
+                            'congesRate',
+                            parseFloat(e.target.value)
+                          )
+                        }
+                        placeholder="Rate"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setSelectedEmployee(null)}>
+                  Close
+                </Button>
+                <Button onClick={() => setSelectedEmployee(null)}>Save Changes</Button>
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
