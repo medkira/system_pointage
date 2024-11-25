@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { Employee, PaymentType, PrimeType } from '@/domain/entities/Employee'
+import { useEmployeeStore } from '@/infrastructure/stores/employeeStore'
 import {
   Dialog,
   DialogContent,
@@ -30,8 +31,10 @@ interface EmployeeFormDialogProps {
 
 export function EmployeeFormDialog({ mode, employee, onClose }: EmployeeFormDialogProps) {
   const [open, setOpen] = useState(false)
+  const { addEmployee, updateEmployee } = useEmployeeStore()
   const [formData, setFormData] = useState<Partial<Employee>>(
     employee || {
+      id: `EMP${Math.floor(Math.random() * 10000)}`,
       type: 'declared',
       status: 'present',
       workingHours: 8.5,
@@ -46,16 +49,39 @@ export function EmployeeFormDialog({ mode, employee, onClose }: EmployeeFormDial
     }
   )
 
+  useEffect(() => {
+    if (!open && !employee) {
+      setFormData({
+        id: `EMP${Math.floor(Math.random() * 10000)}`,
+        type: 'declared',
+        status: 'present',
+        workingHours: 8.5,
+        paymentType: 'daily',
+        rate: 0,
+        benefits: {
+          prime: 0,
+          conges: 0,
+          congesRate: 0,
+          primeType: 'performance'
+        }
+      })
+    }
+  }, [open, employee])
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
+    if (mode === 'add') {
+      addEmployee(formData as Employee)
+    } else {
+      updateEmployee(formData as Employee)
+    }
     setOpen(false)
     onClose?.()
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild onClick={() => setOpen(true)}>
         <Button
           variant={mode === 'add' ? 'default' : 'outline'}
           className={cn({

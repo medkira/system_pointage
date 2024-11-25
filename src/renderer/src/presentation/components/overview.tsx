@@ -3,6 +3,7 @@ import { useEmployeeStore } from '@/infrastructure/stores/employeeStore'
 import { useExpenseStore } from '@/infrastructure/stores/expenseStore'
 import { Card, CardContent, CardHeader, CardTitle } from '@/presentation/components/ui/card'
 import { TrendingDown, TrendingUp } from 'lucide-react'
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts'
 
 export function Overview() {
   const { employees } = useEmployeeStore()
@@ -52,6 +53,39 @@ export function Overview() {
 
   // Profit margins
   const profitMargin = (monthlyProfit / monthlyRevenue) * 100
+
+  // Prepare data for cost breakdown chart
+  const costBreakdownData = [
+    {
+      name: 'Declared Salaries',
+      value: declaredPayment,
+      color: '#0ea5e9' // sky-500
+    },
+    {
+      name: 'Undeclared Salaries',
+      value: undeclaredPayment,
+      color: '#8b5cf6' // violet-500
+    },
+    {
+      name: 'Fixed Expenses',
+      value: dailyExpenses,
+      color: '#f97316' // orange-500
+    }
+  ]
+
+  // Prepare data for revenue allocation
+  const revenueBreakdownData = [
+    {
+      name: 'Net Profit',
+      value: dailyProfit,
+      color: '#22c55e' // green-500
+    },
+    {
+      name: 'Operating Costs',
+      value: todayPayment + dailyExpenses,
+      color: '#ef4444' // red-500
+    }
+  ].filter((item) => item.value > 0) // Only show positive values
 
   return (
     <div className="space-y-4">
@@ -238,6 +272,92 @@ export function Overview() {
                 </>
               )
             })()}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Analytics Charts Section */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm font-medium">Daily Cost Distribution</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={costBreakdownData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {costBreakdownData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    formatter={(value: number) => [`$${value.toFixed(2)}`, '']}
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--background))',
+                      borderRadius: '8px'
+                    }}
+                  />
+                  <Legend
+                    formatter={(value, entry: any) => (
+                      <span className="text-sm">
+                        {value}: ${entry?.payload?.value?.toFixed(2) ?? '0.00'}
+                      </span>
+                    )}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm font-medium">Revenue Allocation</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={revenueBreakdownData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={80}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {revenueBreakdownData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    formatter={(value: number) => [`$${value.toFixed(2)}`, '']}
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--background))',
+                      borderRadius: '8px'
+                    }}
+                  />
+                  <Legend
+                    formatter={(value, entry: any) => (
+                      <span className="text-sm">
+                        {value}: ${entry?.payload?.value?.toFixed(2) ?? '0.00'} (
+                        {(((entry?.payload?.value ?? 0) / dailyRevenue) * 100).toFixed(1)}%)
+                      </span>
+                    )}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           </CardContent>
         </Card>
       </div>
