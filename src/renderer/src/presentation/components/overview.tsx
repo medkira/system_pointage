@@ -1,3 +1,4 @@
+import { Employee } from '@/domain/entities/Employee'
 import { useEmployeeStore } from '@/infrastructure/stores/employeeStore'
 import { useExpenseStore } from '@/infrastructure/stores/expenseStore'
 import { Card, CardContent, CardHeader, CardTitle } from '@/presentation/components/ui/card'
@@ -6,22 +7,30 @@ export function Overview() {
   const { employees } = useEmployeeStore()
   const { expenses } = useExpenseStore()
 
+  const calculateDailyPay = (employee: Employee) => {
+    if (employee.paymentType === 'daily') return employee.rate
+    return employee.rate * employee.workingHours // hourly rate * hours
+  }
+
   // Calculate today's payment
   const todayPayment = employees
     .filter((emp) => emp.status !== 'absent')
-    .reduce((total, emp) => total + emp.dailyRate, 0)
+    .reduce((total, emp) => total + calculateDailyPay(emp), 0)
 
-  // Calculate potential monthly payment (assuming 22 working days)
-  const monthlyProjection = employees.reduce((total, emp) => total + emp.dailyRate * 22, 0)
+  // Calculate monthly projection
+  const monthlyProjection = employees.reduce((total, emp) => {
+    const dailyPay = calculateDailyPay(emp)
+    return total + dailyPay * 22
+  }, 0)
 
   // Calculate by employee type
   const declaredPayment = employees
     .filter((emp) => emp.type === 'declared' && emp.status !== 'absent')
-    .reduce((total, emp) => total + emp.dailyRate, 0)
+    .reduce((total, emp) => total + calculateDailyPay(emp), 0)
 
   const undeclaredPayment = employees
     .filter((emp) => emp.type === 'undeclared' && emp.status !== 'absent')
-    .reduce((total, emp) => total + emp.dailyRate, 0)
+    .reduce((total, emp) => total + calculateDailyPay(emp), 0)
 
   // Calculate total monthly fixed expenses
   const totalMonthlyExpenses = expenses.reduce((total, exp) => total + exp.monthlyAmount, 0)
