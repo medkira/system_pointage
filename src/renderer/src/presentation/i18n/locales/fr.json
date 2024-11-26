@@ -10,7 +10,8 @@
     "type": "Type",
     "name": "Nom",
     "position": "Poste",
-    "rate": "Taux"
+    "rate": "Taux",
+    "all": "Tous"
   },
   "navigation": {
     "dashboard": "Tableau de bord",
@@ -18,7 +19,8 @@
     "attendance": "Présence",
     "employees": "Employés",
     "reports": "Rapports",
-    "settings": "Paramètres"
+    "settings": "Paramètres",
+    "expenses": "Dépenses"
   },
   "dashboard": {
     "title": "Tableau de bord des présences",
@@ -122,6 +124,59 @@
         "description": "Effacer toutes les données en cache",
         "button": "Vider"
       }
+    }
+  },
+  "expenses": {
+    "title": "Gestion des Dépenses",
+    "subtitle": "Gérer vos dépenses mensuelles",
+    "totalMonthly": "Total des Dépenses Mensuelles",
+    "list": {
+      "title": "Dépenses Actuelles"
+    },
+    "categories": {
+      "rent": "Loyer",
+      "utilities": "Services",
+      "vehicles": "Véhicules",
+      "depreciation": "Amortissement",
+      "other": "Autre"
+    },
+    "subcategories": {
+      "rent": {
+        "office": "Loyer Bureau",
+        "warehouse": "Loyer Entrepôt",
+        "parking": "Stationnement"
+      },
+      "utilities": {
+        "electricity": "Électricité",
+        "water": "Eau",
+        "gas": "Gaz",
+        "internet": "Internet"
+      },
+      "vehicles": {
+        "rental": "Location Véhicule",
+        "fuel": "Carburant",
+        "maintenance": "Entretien Véhicule",
+        "insurance": "Assurance Véhicule"
+      },
+      "depreciation": {
+        "global": "Amortissement Global",
+        "vehicles": "Amortissement Véhicules",
+        "equipment": "Amortissement Équipement",
+        "buildings": "Amortissement Bâtiments",
+        "software": "Amortissement Logiciels"
+      },
+      "other": {
+        "supplies": "Fournitures Bureau",
+        "maintenance": "Entretien Général",
+        "insurance": "Assurance Entreprise"
+      }
+    },
+    "form": {
+      "addExpense": "Ajouter une Dépense",
+      "description": "Ajouter ou modifier des dépenses mensuelles",
+      "category": "Catégorie",
+      "monthlyAmount": "Montant Mensuel",
+      "dueDay": "Jour d'échéance (1-31)"
     }
   }
 }

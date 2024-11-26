@@ -10,7 +10,8 @@
     "type": "Type",
     "name": "Name",
     "position": "Position",
-    "rate": "Rate"
+    "rate": "Rate",
+    "all": "All"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -18,7 +19,8 @@
     "attendance": "Attendance",
     "employees": "Employees",
     "reports": "Reports",
-    "settings": "Settings"
+    "settings": "Settings",
+    "expenses": "Expenses"
   },
   "dashboard": {
     "title": "Attendance Dashboard",
@@ -122,6 +124,60 @@
         "description": "Clear all cached data",
         "button": "Clear"
       }
+    }
+  },
+  "expenses": {
+    "title": "Expense Management",
+    "subtitle": "Manage your monthly business expenses",
+    "totalMonthly": "Total Monthly Expenses",
+    "list": {
+      "title": "Current Expenses"
+    },
+    "categories": {
+      "rent": "Rent",
+      "utilities": "Utilities",
+      "vehicles": "Vehicles",
+      "depreciation": "Depreciation",
+      "other": "Other"
+    },
+    "subcategories": {
+      "rent": {
+        "office": "Office Rent",
+        "warehouse": "Warehouse Rent",
+        "parking": "Parking Space"
+      },
+      "utilities": {
+        "electricity": "Electricity",
+        "water": "Water",
+        "gas": "Gas",
+        "internet": "Internet"
+      },
+      "vehicles": {
+        "rental": "Vehicle Rental",
+        "fuel": "Fuel",
+        "maintenance": "Vehicle Maintenance",
+        "insurance": "Vehicle Insurance"
+      },
+      "depreciation": {
+        "global": "Global Depreciation",
+        "vehicles": "Vehicles Depreciation",
+        "equipment": "Equipment Depreciation",
+        "buildings": "Buildings Depreciation",
+        "software": "Software Depreciation"
+      },
+      "other": {
+        "supplies": "Office Supplies",
+        "maintenance": "General Maintenance",
+        "insurance": "Business Insurance"
+      }
+    },
+    "form": {
+      "addExpense": "Add Expense",
+      "description": "Add or edit monthly business expenses",
+      "category": "Category",
+      "monthlyAmount": "Monthly Amount",
+      "dueDay": "Due Day (1-31)",
+      "selectDate": "Select due date"
     }
   }
 }
