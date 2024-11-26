@@ -20,7 +20,8 @@ import {
   SelectValue
 } from '@/presentation/components/ui/select'
 import { format } from 'date-fns'
-import { Gift, Badge } from 'lucide-react'
+import { Gift } from 'lucide-react'
+import { Badge } from '@/presentation/components/ui/badge'
 
 interface EmployeeBenefitsDialogProps {
   employee: Employee
