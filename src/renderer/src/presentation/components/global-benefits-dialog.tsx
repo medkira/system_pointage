@@ -27,7 +27,7 @@ import { cn } from '@/presentation/lib/utils'
 interface GlobalBenefitsDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  employeeType: 'declared' | 'undeclared'
+  employeeType: 'declared' | 'undeclared' | 'all'
 }
 
 export function GlobalBenefitsDialog({
@@ -39,9 +39,15 @@ export function GlobalBenefitsDialog({
   const [selectedBenefit, setSelectedBenefit] = useState<'prime' | 'conge'>('prime')
   const [action, setAction] = useState<'give' | 'remove'>('give')
   const [isConfirming, setIsConfirming] = useState(false)
+  const [selectedEmployeeType, setSelectedEmployeeType] = useState<
+    'declared' | 'undeclared' | 'all'
+  >(employeeType)
 
   // Filter employees based on type
-  const filteredEmployees = employees.filter((emp) => emp.type === employeeType)
+  const filteredEmployees =
+    selectedEmployeeType === 'all'
+      ? employees
+      : employees.filter((emp) => emp.type === selectedEmployeeType)
 
   // Calculate benefits for an employee
   const calculateBenefits = (employeeId: string) => {
@@ -127,22 +133,45 @@ export function GlobalBenefitsDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             {getBenefitIcon()}
-            <span>
-              Global Benefits - {employeeType.charAt(0).toUpperCase() + employeeType.slice(1)}{' '}
-              Employees
-            </span>
+            <span>Global Benefits Management</span>
           </DialogTitle>
-          <DialogDescription>
-            Apply or remove benefits for all {employeeType} employees
-          </DialogDescription>
+          <DialogDescription>Apply or remove benefits for employees</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6">
-          {/* Step 1: Select Benefit Type */}
+          {/* Step 1: Select Employee Type */}
+          {employeeType === 'all' && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                <div className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 text-primary">
+                  1
+                </div>
+                Select Employee Type
+              </div>
+              <Select
+                value={selectedEmployeeType}
+                onValueChange={(value: 'declared' | 'undeclared' | 'all') => {
+                  setSelectedEmployeeType(value)
+                  setIsConfirming(false)
+                }}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select employee type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Employees</SelectItem>
+                  <SelectItem value="declared">Declared Employees</SelectItem>
+                  <SelectItem value="undeclared">Undeclared Employees</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          {/* Step 2: Select Benefit Type */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
               <div className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 text-primary">
-                1
+                {employeeType === 'all' ? '2' : '1'}
               </div>
               Select Benefit Type
             </div>
@@ -169,11 +198,11 @@ export function GlobalBenefitsDialog({
             </Select>
           </div>
 
-          {/* Step 2: Select Action */}
+          {/* Step 3: Select Action */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
               <div className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 text-primary">
-                2
+                {employeeType === 'all' ? '3' : '2'}
               </div>
               Select Action
             </div>
@@ -217,8 +246,8 @@ export function GlobalBenefitsDialog({
                   <h4 className="font-medium leading-none">Review Changes</h4>
                   <p className="text-sm text-muted-foreground">
                     This will {action === 'give' ? 'grant' : 'remove'}{' '}
-                    {selectedBenefit === 'prime' ? 'performance bonus' : 'leave days'} for all{' '}
-                    {employeeType} employees.
+                    {selectedBenefit === 'prime' ? 'performance bonus' : 'leave days'} for{' '}
+                    {selectedEmployeeType === 'all' ? 'all' : selectedEmployeeType} employees.
                     {action === 'give' && (
                       <>
                         {selectedBenefit === 'prime'

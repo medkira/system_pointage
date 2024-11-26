@@ -16,20 +16,21 @@ import { GlobalBenefitsDialog } from './global-benefits-dialog'
 import { cn } from '../lib/utils'
 
 interface EmployeeTableProps {
-  type: 'declared' | 'undeclared'
+  type: 'declared' | 'undeclared' | 'all'
 }
 
 export function EmployeeTable({ type }: EmployeeTableProps) {
   const { employees } = useEmployeeStore()
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null)
   const [showGlobalBenefits, setShowGlobalBenefits] = useState(false)
-  const filteredEmployees = employees.filter((emp) => emp.type === type)
+  const filteredEmployees =
+    type === 'all' ? employees : employees.filter((emp) => emp.type === type)
 
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold tracking-tight">
-          {type === 'declared' ? 'Declared' : 'Undeclared'} Employees
+          {type === 'all' ? 'All' : type === 'declared' ? 'Declared' : 'Undeclared'} Employees
         </h2>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => setShowGlobalBenefits(true)}>
@@ -46,6 +47,7 @@ export function EmployeeTable({ type }: EmployeeTableProps) {
               <TableHead>Employee ID</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Position</TableHead>
+              <TableHead>Type</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Payment Type</TableHead>
               <TableHead>Rate</TableHead>
@@ -64,6 +66,19 @@ export function EmployeeTable({ type }: EmployeeTableProps) {
                 <TableCell className="font-medium">{employee.id}</TableCell>
                 <TableCell>{employee.name}</TableCell>
                 <TableCell>{employee.position}</TableCell>
+                <TableCell>
+                  <span
+                    className={cn(
+                      'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+                      {
+                        'bg-blue-100 text-blue-800': employee.type === 'declared',
+                        'bg-orange-100 text-orange-800': employee.type === 'undeclared'
+                      }
+                    )}
+                  >
+                    {employee.type}
+                  </span>
+                </TableCell>
                 <TableCell>
                   <span
                     className={cn(

@@ -35,6 +35,7 @@ function App(): JSX.Element {
           <TabsList>
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="attendance">Attendance</TabsTrigger>
+            <TabsTrigger value="all-employees">All Employees</TabsTrigger>
             <TabsTrigger value="declared-employees">Declared Employees</TabsTrigger>
             <TabsTrigger value="undeclared-employees">Undeclared Employees</TabsTrigger>
             <TabsTrigger value="reports">Reports</TabsTrigger>
@@ -44,6 +45,9 @@ function App(): JSX.Element {
           </TabsContent>
           <TabsContent value="attendance" className="space-y-4">
             <AttendanceTable />
+          </TabsContent>
+          <TabsContent value="all-employees" className="space-y-4">
+            <EmployeeTable type="all" />
           </TabsContent>
           <TabsContent value="declared-employees" className="space-y-4">
             <EmployeeTable type="declared" />
