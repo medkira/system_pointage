@@ -12,6 +12,7 @@ import {
 import { Button } from '@/presentation/components/ui/button'
 import { EmployeeFormDialog } from './employee-form-dialog'
 import { EmployeeBenefitsDialog } from './employee-benefits-dialog'
+import { GlobalBenefitsDialog } from './global-benefits-dialog'
 import { cn } from '../lib/utils'
 
 interface EmployeeTableProps {
@@ -21,6 +22,7 @@ interface EmployeeTableProps {
 export function EmployeeTable({ type }: EmployeeTableProps) {
   const { employees } = useEmployeeStore()
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null)
+  const [showGlobalBenefits, setShowGlobalBenefits] = useState(false)
   const filteredEmployees = employees.filter((emp) => emp.type === type)
 
   return (
@@ -29,7 +31,12 @@ export function EmployeeTable({ type }: EmployeeTableProps) {
         <h2 className="text-2xl font-semibold tracking-tight">
           {type === 'declared' ? 'Declared' : 'Undeclared'} Employees
         </h2>
-        <EmployeeFormDialog mode="add" />
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setShowGlobalBenefits(true)}>
+            Manage Global Benefits
+          </Button>
+          <EmployeeFormDialog mode="add" />
+        </div>
       </div>
 
       <div className="rounded-md border">
@@ -132,6 +139,12 @@ export function EmployeeTable({ type }: EmployeeTableProps) {
           onOpenChange={(open) => !open && setSelectedEmployee(null)}
         />
       )}
+
+      <GlobalBenefitsDialog
+        open={showGlobalBenefits}
+        onOpenChange={setShowGlobalBenefits}
+        employeeType={type}
+      />
     </div>
   )
 }
