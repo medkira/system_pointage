@@ -1,0 +1,127 @@
+{
+  "common": {
+    "settings": "Settings",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "actions": "Actions",
+    "status": "Status",
+    "type": "Type",
+    "name": "Name",
+    "position": "Position",
+    "rate": "Rate"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "overview": "Overview",
+    "attendance": "Attendance",
+    "employees": "Employees",
+    "reports": "Reports",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Attendance Dashboard",
+    "downloadReport": "Download Report",
+    "allEmployees": "All Employees",
+    "declaredEmployees": "Declared Employees",
+    "undeclaredEmployees": "Undeclared Employees"
+  },
+  "overview": {
+    "cards": {
+      "todayPayment": {
+        "title": "Today's Total Payment",
+        "subtitle": "For {{count}} active employees"
+      },
+      "monthlyProjection": {
+        "title": "Monthly Projection",
+        "subtitle": "If all employees work full month (22 days)"
+      },
+      "declaredPayment": {
+        "title": "Declared Employees Payment",
+        "subtitle": "Today's payment for declared employees"
+      },
+      "undeclaredPayment": {
+        "title": "Undeclared Employees Payment",
+        "subtitle": "Today's payment for undeclared employees"
+      },
+      "expenses": {
+        "title": "Monthly Fixed Expenses",
+        "subtitle": "Total fixed expenses for this month",
+        "daily": "Daily expenses portion"
+      }
+    },
+    "charts": {
+      "employeeDistribution": "Employee Distribution",
+      "paymentDistribution": "Payment Distribution",
+      "expenses": "Expenses"
+    }
+  },
+  "employees": {
+    "status": {
+      "present": "Present",
+      "absent": "Absent",
+      "late": "Late"
+    },
+    "type": {
+      "declared": "Declared",
+      "undeclared": "Undeclared"
+    },
+    "paymentType": {
+      "daily": "Daily Rate",
+      "hourly": "Hourly Rate"
+    },
+    "benefits": {
+      "prime": {
+        "title": "Prime Status",
+        "approved": "Prime Approved",
+        "none": "No Prime"
+      },
+      "conge": {
+        "title": "Congé Status",
+        "available": "{{days}} Days Available",
+        "none": "No Congé Days"
+      },
+      "manage": "Manage Benefits"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your application preferences and configurations",
+    "tabs": {
+      "general": "General",
+      "notifications": "Notifications",
+      "appearance": "Appearance",
+      "advanced": "Advanced"
+    },
+    "general": {
+      "title": "General Settings",
+      "description": "Configure basic application settings and preferences",
+      "automaticUpdates": "Automatic Updates",
+      "saveHistory": "Save History",
+      "language": "Language"
+    },
+    "notifications": {
+      "title": "Notification Preferences",
+      "description": "Choose what notifications you want to receive",
+      "email": "Email Notifications",
+      "desktop": "Desktop Notifications"
+    },
+    "appearance": {
+      "title": "Appearance Settings",
+      "description": "Customize how the application looks",
+      "darkMode": "Dark Mode",
+      "compactMode": "Compact Mode"
+    },
+    "advanced": {
+      "title": "Advanced Settings",
+      "description": "Configure advanced features and developer options",
+      "developerMode": "Developer Mode",
+      "clearCache": {
+        "title": "Clear Cache",
+        "description": "Clear all cached data",
+        "button": "Clear"
+      }
+    }
+  }
+}

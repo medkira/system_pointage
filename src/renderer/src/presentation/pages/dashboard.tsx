@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/presentation/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/presentation/components/ui/tabs'
 import { CalendarDateRangePicker } from '../components/date-range-picker'
@@ -6,24 +7,28 @@ import { AttendanceTable } from '../components/attendance-table'
 import { EmployeeTable } from '../components/employee-table'
 
 export function Dashboard(): JSX.Element {
+  const { t } = useTranslation()
+
   return (
     <div className="space-y-4 p-8 pt-6">
       <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Attendance Dashboard</h2>
+        <h2 className="text-3xl font-bold tracking-tight">{t('dashboard.title')}</h2>
         <div className="flex items-center space-x-2">
           <CalendarDateRangePicker />
-          <Button>Download Report</Button>
+          <Button>{t('dashboard.downloadReport')}</Button>
         </div>
       </div>
 
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="attendance">Attendance</TabsTrigger>
-          <TabsTrigger value="all-employees">All Employees</TabsTrigger>
-          <TabsTrigger value="declared-employees">Declared Employees</TabsTrigger>
-          <TabsTrigger value="undeclared-employees">Undeclared Employees</TabsTrigger>
-          <TabsTrigger value="reports">Reports</TabsTrigger>
+          <TabsTrigger value="overview">{t('navigation.overview')}</TabsTrigger>
+          <TabsTrigger value="attendance">{t('navigation.attendance')}</TabsTrigger>
+          <TabsTrigger value="all-employees">{t('dashboard.allEmployees')}</TabsTrigger>
+          <TabsTrigger value="declared-employees">{t('dashboard.declaredEmployees')}</TabsTrigger>
+          <TabsTrigger value="undeclared-employees">
+            {t('dashboard.undeclaredEmployees')}
+          </TabsTrigger>
+          <TabsTrigger value="reports">{t('navigation.reports')}</TabsTrigger>
         </TabsList>
         <TabsContent value="overview" className="space-y-4">
           <Overview />

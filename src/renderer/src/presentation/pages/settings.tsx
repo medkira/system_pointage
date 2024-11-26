@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/presentation/components/ui/button'
 import {
   Card,
@@ -9,61 +10,82 @@ import {
 import { Label } from '@/presentation/components/ui/label'
 import { Switch } from '@/presentation/components/ui/switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/presentation/components/ui/tabs'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/presentation/components/ui/select'
 
 export function Settings(): JSX.Element {
+  const { t, i18n } = useTranslation()
+
+  const changeLanguage = (language: string) => {
+    i18n.changeLanguage(language)
+  }
+
   return (
     <div className="space-y-6 p-8 pt-6">
       <div className="flex items-center justify-between space-y-2">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
-          <p className="text-muted-foreground">
-            Manage your application preferences and configurations.
-          </p>
+          <h2 className="text-3xl font-bold tracking-tight">{t('settings.title')}</h2>
+          <p className="text-muted-foreground">{t('settings.subtitle')}</p>
         </div>
       </div>
 
       <Tabs defaultValue="general" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="appearance">Appearance</TabsTrigger>
-          <TabsTrigger value="advanced">Advanced</TabsTrigger>
+          <TabsTrigger value="general">{t('settings.tabs.general')}</TabsTrigger>
+          <TabsTrigger value="notifications">{t('settings.tabs.notifications')}</TabsTrigger>
+          <TabsTrigger value="appearance">{t('settings.tabs.appearance')}</TabsTrigger>
+          <TabsTrigger value="advanced">{t('settings.tabs.advanced')}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>General Settings</CardTitle>
-              <CardDescription>
-                Configure basic application settings and preferences.
-              </CardDescription>
+              <CardTitle>{t('settings.general.title')}</CardTitle>
+              <CardDescription>{t('settings.general.description')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between space-x-2">
-                <Label htmlFor="automatic-updates">Automatic Updates</Label>
+                <Label htmlFor="automatic-updates">{t('settings.general.automaticUpdates')}</Label>
                 <Switch id="automatic-updates" />
               </div>
               <div className="flex items-center justify-between space-x-2">
-                <Label htmlFor="save-history">Save History</Label>
+                <Label htmlFor="save-history">{t('settings.general.saveHistory')}</Label>
                 <Switch id="save-history" />
+              </div>
+              <div className="flex items-center justify-between space-x-2">
+                <Label>{t('settings.general.language')}</Label>
+                <Select value={i18n.language} onValueChange={changeLanguage}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select Language" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="en">English</SelectItem>
+                    <SelectItem value="fr">Français</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Data Management</CardTitle>
-              <CardDescription>Manage your application data and exports.</CardDescription>
+              <CardTitle>{t('settings.advanced.clearCache.title')}</CardTitle>
+              <CardDescription>{t('settings.advanced.clearCache.description')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between space-x-2">
                 <div className="space-y-1">
-                  <Label>Export Data</Label>
+                  <Label>{t('settings.advanced.clearCache.title')}</Label>
                   <p className="text-sm text-muted-foreground">
-                    Download all your data in CSV format
+                    {t('settings.advanced.clearCache.description')}
                   </p>
                 </div>
-                <Button variant="outline">Export</Button>
+                <Button variant="outline">{t('settings.advanced.clearCache.button')}</Button>
               </div>
             </CardContent>
           </Card>
@@ -72,16 +94,16 @@ export function Settings(): JSX.Element {
         <TabsContent value="notifications" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Notification Preferences</CardTitle>
-              <CardDescription>Choose what notifications you want to receive.</CardDescription>
+              <CardTitle>{t('settings.notifications.title')}</CardTitle>
+              <CardDescription>{t('settings.notifications.description')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between space-x-2">
-                <Label htmlFor="email-notifications">Email Notifications</Label>
+                <Label htmlFor="email-notifications">{t('settings.notifications.email')}</Label>
                 <Switch id="email-notifications" />
               </div>
               <div className="flex items-center justify-between space-x-2">
-                <Label htmlFor="desktop-notifications">Desktop Notifications</Label>
+                <Label htmlFor="desktop-notifications">{t('settings.notifications.desktop')}</Label>
                 <Switch id="desktop-notifications" />
               </div>
             </CardContent>
@@ -91,16 +113,16 @@ export function Settings(): JSX.Element {
         <TabsContent value="appearance" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Appearance Settings</CardTitle>
-              <CardDescription>Customize how the application looks.</CardDescription>
+              <CardTitle>{t('settings.appearance.title')}</CardTitle>
+              <CardDescription>{t('settings.appearance.description')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between space-x-2">
-                <Label htmlFor="dark-mode">Dark Mode</Label>
+                <Label htmlFor="dark-mode">{t('settings.appearance.darkMode')}</Label>
                 <Switch id="dark-mode" />
               </div>
               <div className="flex items-center justify-between space-x-2">
-                <Label htmlFor="compact-mode">Compact Mode</Label>
+                <Label htmlFor="compact-mode">{t('settings.appearance.compactMode')}</Label>
                 <Switch id="compact-mode" />
               </div>
             </CardContent>
@@ -110,20 +132,13 @@ export function Settings(): JSX.Element {
         <TabsContent value="advanced" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Advanced Settings</CardTitle>
-              <CardDescription>Configure advanced features and developer options.</CardDescription>
+              <CardTitle>{t('settings.advanced.title')}</CardTitle>
+              <CardDescription>{t('settings.advanced.description')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between space-x-2">
-                <Label htmlFor="developer-mode">Developer Mode</Label>
+                <Label htmlFor="developer-mode">{t('settings.advanced.developerMode')}</Label>
                 <Switch id="developer-mode" />
-              </div>
-              <div className="flex items-center justify-between space-x-2">
-                <div className="space-y-1">
-                  <Label>Clear Cache</Label>
-                  <p className="text-sm text-muted-foreground">Clear all cached data</p>
-                </div>
-                <Button variant="outline">Clear</Button>
               </div>
             </CardContent>
           </Card>

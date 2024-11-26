@@ -1,0 +1,127 @@
+{
+  "common": {
+    "settings": "Paramètres",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "actions": "Actions",
+    "status": "Statut",
+    "type": "Type",
+    "name": "Nom",
+    "position": "Poste",
+    "rate": "Taux"
+  },
+  "navigation": {
+    "dashboard": "Tableau de bord",
+    "overview": "Aperçu",
+    "attendance": "Présence",
+    "employees": "Employés",
+    "reports": "Rapports",
+    "settings": "Paramètres"
+  },
+  "dashboard": {
+    "title": "Tableau de bord des présences",
+    "downloadReport": "Télécharger le rapport",
+    "allEmployees": "Tous les employés",
+    "declaredEmployees": "Employés déclarés",
+    "undeclaredEmployees": "Employés non déclarés"
+  },
+  "overview": {
+    "cards": {
+      "todayPayment": {
+        "title": "Paiement total du jour",
+        "subtitle": "Pour {{count}} employés actifs"
+      },
+      "monthlyProjection": {
+        "title": "Projection mensuelle",
+        "subtitle": "Si tous les employés travaillent un mois complet (22 jours)"
+      },
+      "declaredPayment": {
+        "title": "Paiement des employés déclarés",
+        "subtitle": "Paiement du jour pour les employés déclarés"
+      },
+      "undeclaredPayment": {
+        "title": "Paiement des employés non déclarés",
+        "subtitle": "Paiement du jour pour les employés non déclarés"
+      },
+      "expenses": {
+        "title": "Dépenses fixes mensuelles",
+        "subtitle": "Total des dépenses fixes pour ce mois",
+        "daily": "Portion des dépenses journalières"
+      }
+    },
+    "charts": {
+      "employeeDistribution": "Répartition des employés",
+      "paymentDistribution": "Répartition des paiements",
+      "expenses": "Dépenses"
+    }
+  },
+  "employees": {
+    "status": {
+      "present": "Présent",
+      "absent": "Absent",
+      "late": "En retard"
+    },
+    "type": {
+      "declared": "Déclaré",
+      "undeclared": "Non déclaré"
+    },
+    "paymentType": {
+      "daily": "Taux journalier",
+      "hourly": "Taux horaire"
+    },
+    "benefits": {
+      "prime": {
+        "title": "Statut Prime",
+        "approved": "Prime approuvée",
+        "none": "Pas de prime"
+      },
+      "conge": {
+        "title": "Statut Congé",
+        "available": "{{days}} jours disponibles",
+        "none": "Pas de congés"
+      },
+      "manage": "Gérer les avantages"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Gérer vos préférences et configurations",
+    "tabs": {
+      "general": "Général",
+      "notifications": "Notifications",
+      "appearance": "Apparence",
+      "advanced": "Avancé"
+    },
+    "general": {
+      "title": "Paramètres généraux",
+      "description": "Configurer les paramètres de base",
+      "automaticUpdates": "Mises à jour automatiques",
+      "saveHistory": "Sauvegarder l'historique",
+      "language": "Langue"
+    },
+    "notifications": {
+      "title": "Préférences de notification",
+      "description": "Choisir les notifications à recevoir",
+      "email": "Notifications par email",
+      "desktop": "Notifications bureau"
+    },
+    "appearance": {
+      "title": "Paramètres d'apparence",
+      "description": "Personnaliser l'apparence de l'application",
+      "darkMode": "Mode sombre",
+      "compactMode": "Mode compact"
+    },
+    "advanced": {
+      "title": "Paramètres avancés",
+      "description": "Configurer les fonctionnalités avancées",
+      "developerMode": "Mode développeur",
+      "clearCache": {
+        "title": "Vider le cache",
+        "description": "Effacer toutes les données en cache",
+        "button": "Vider"
+      }
+    }
+  }
+}
