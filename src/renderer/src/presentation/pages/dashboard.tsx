@@ -5,6 +5,7 @@ import { CalendarDateRangePicker } from '../components/date-range-picker'
 import { Overview } from '../components/overview'
 import { AttendanceTable } from '../components/attendance-table'
 import { EmployeeTable } from '../components/employee-table'
+import { ClientTable } from '../components/client-table'
 
 export function Dashboard(): JSX.Element {
   const { t } = useTranslation()
@@ -23,6 +24,7 @@ export function Dashboard(): JSX.Element {
         <TabsList>
           <TabsTrigger value="overview">{t('navigation.overview')}</TabsTrigger>
           <TabsTrigger value="attendance">{t('navigation.attendance')}</TabsTrigger>
+          <TabsTrigger value="clients">{t('navigation.clients')}</TabsTrigger>
           <TabsTrigger value="all-employees">{t('dashboard.allEmployees')}</TabsTrigger>
           <TabsTrigger value="declared-employees">{t('dashboard.declaredEmployees')}</TabsTrigger>
           <TabsTrigger value="undeclared-employees">
@@ -35,6 +37,9 @@ export function Dashboard(): JSX.Element {
         </TabsContent>
         <TabsContent value="attendance" className="space-y-4">
           <AttendanceTable />
+        </TabsContent>
+        <TabsContent value="clients" className="space-y-4">
+          <ClientTable />
         </TabsContent>
         <TabsContent value="all-employees" className="space-y-4">
           <EmployeeTable type="all" />

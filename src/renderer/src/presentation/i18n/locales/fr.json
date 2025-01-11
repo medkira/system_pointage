@@ -18,6 +18,7 @@
     "overview": "Aperçu",
     "attendance": "Présence",
     "employees": "Employés",
+    "clients": "Clients",
     "reports": "Rapports",
     "settings": "Paramètres",
     "expenses": "Dépenses"
@@ -177,6 +178,31 @@
       "category": "Catégorie",
       "monthlyAmount": "Montant Mensuel",
       "dueDay": "Jour d'échéance (1-31)"
+    }
+  },
+  "clients": {
+    "title": "Gestion des Clients",
+    "subtitle": "Gérer vos clients professionnels",
+    "addClient": "Ajouter un Client",
+    "editClient": "Modifier le Client",
+    "deleteClient": "Supprimer le Client",
+    "form": {
+      "name": "Nom du Client",
+      "email": "Email",
+      "phone": "Téléphone",
+      "address": "Adresse",
+      "notes": "Notes"
+    },
+    "table": {
+      "name": "Nom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Actif",
+      "inactive": "Inactif"
     }
   }
 }

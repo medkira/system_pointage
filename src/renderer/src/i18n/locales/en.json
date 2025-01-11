@@ -1,0 +1,15 @@
+{
+  "clients": {
+    "title": "Clients",
+    "addClient": "Add Client",
+    "company": "Company",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "lastInteraction": "Last Interaction",
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  }
+}

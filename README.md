@@ -1,4 +1,4 @@
-# electron-shadcn-typescript
+<!-- # electron-shadcn-typescript
 
 An Electron application boilerplate with React and TypeScript ( & Shadcn )
 
@@ -7,7 +7,7 @@ An Electron application boilerplate with React and TypeScript ( & Shadcn )
 
 ## Recommended IDE Setup
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) -->
 
 ## Project Setup
 

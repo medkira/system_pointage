@@ -18,6 +18,7 @@
     "overview": "Overview",
     "attendance": "Attendance",
     "employees": "Employees",
+    "clients": "Clients",
     "reports": "Reports",
     "settings": "Settings",
     "expenses": "Expenses"
@@ -178,6 +179,31 @@
       "monthlyAmount": "Monthly Amount",
       "dueDay": "Due Day (1-31)",
       "selectDate": "Select due date"
+    }
+  },
+  "clients": {
+    "title": "Client Management",
+    "subtitle": "Manage your business clients",
+    "addClient": "Add Client",
+    "editClient": "Edit Client",
+    "deleteClient": "Delete Client",
+    "form": {
+      "name": "Client Name",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "notes": "Notes"
+    },
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
     }
   }
 }
